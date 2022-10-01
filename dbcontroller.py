@@ -12,7 +12,7 @@ def create_db():
 
     conn = sqlite3.connect(DB_PATH)
     conn.execute("""CREATE TABLE Scores (
-        UserID int,
+        UserID varchar(18),
         Score int
         )""")
     conn.commit()
@@ -20,15 +20,14 @@ def create_db():
     conn.close()
 
 
-class ScoreController:
-    
+class ScoreController:    
     async def startup(self):
         self.db = await aiosqlite.connect(DB_PATH)
 
     """
     Gets a user's score, or None if the user does not exist.
     """
-    async def get_user_score(self, discord_id: int) -> Optional[int]:
+    async def get_user_score(self, discord_id: str) -> Optional[int]:
         async with self.db.cursor() as c:
             await c.execute("SELECT Score FROM Scores WHERE UserID=?;", [discord_id])
             result = await c.fetchone()
@@ -37,7 +36,7 @@ class ScoreController:
     """
     Sets a user's score, updating or adding entries where appropriate. 
     """
-    async def set_user_score(self, discord_id: int, score: int):
+    async def set_user_score(self, discord_id: str, score: int):
         async with self.db.cursor() as c:
             if (await self.get_user_score(discord_id)) is None:
                 await c.execute("INSERT INTO Scores VALUES (?, ?);", [discord_id, score])
