@@ -6,7 +6,7 @@ piveillance project for UoS ECSS picohack 2022
 - [ ] frontend
   - [ ] leaderboard
   - [ ] send voice data
-  - [ ] send button presses
+  - [x] send button presses
 - [ ] backend
   - [ ] process audio
   - [x] process button presses
