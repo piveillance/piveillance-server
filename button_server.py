@@ -24,5 +24,8 @@ class ButtonServer:
         score_change = await self.read_score_change(await reader.read(1))
 
         orig_score = self.scorer.get_user_score(discord_id)
-        self.scorer.set_user_score(discord_id, orig_score + score_change)
+        score = orig_score + score_change
+        score = 0 if score < 0 else (1000 if score > 1000 else score)
+        self.scorer.set_user_score(discord_id, score)
 
+        writer.write(score.to_bytes(2, "big"))
