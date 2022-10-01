@@ -1,7 +1,7 @@
 import asyncio
 import os
 from dbcontroller import create_db, DB_DIR, ScoreController
-from listener import AudioServer
+from audio_server import AudioServer
 from button_server import ButtonServer
 
 async def main():
@@ -9,17 +9,17 @@ async def main():
     await scorer.startup()
     print("connected to db")
 
-    print("starting audio tcp server...")
-    audio_server = AudioServer()
-    await audio_server.startup()
-    print(f"audio tcp server listening on port {audio_server.port}")
+    #print("starting audio tcp server...")
+    #audio_server = AudioServer()
+    #await audio_server.startup()
+    #print(f"audio tcp server listening on port {audio_server.port}")
 
-    print("starting button tcp server...")
-    button_server = ButtonServer()
+    print("starting button server...")
+    button_server = ButtonServer(scorer)
     await button_server.startup()
-    print(f"button tcp server listening on port {button_server.port}")
+    print(f"button server listening on port {button_server.port}")
 
-    await asyncio.gather(audio_server.server.serve_forever(), button_server.server.serve_forever())
+    #await asyncio.gather(button_server.server.serve_forever())
     #await audio_server.server.serve_forever()
 
     print("main done")
