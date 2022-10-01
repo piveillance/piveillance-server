@@ -10,4 +10,4 @@ piveillance project for UoS ECSS picohack 2022
 - [ ] backend
   - [ ] process audio
   - [ ] process button presses
-  - [ ] sqlite for leaderboard
+  - [x] sqlite for leaderboard
