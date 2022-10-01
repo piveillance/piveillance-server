@@ -16,7 +16,7 @@ PWD = path.dirname(path.realpath(__file__))
 read_files = Dict[str, float]
 
 
-class SoundQueue:
+class Sound:
     def __init__(self, dirname: str = "audio"):
         self.r = sr.Recognizer()
         self.audio_queue = Queue()
@@ -66,6 +66,14 @@ class SoundQueue:
 
         res = self.client.comments().analyze(body=req).execute()
         return float(res["attributeScores"]["TOXICITY"]["summaryScore"]["value"])
+
+    """
+    Return the data of all files that have been read and clear them out of the buffer
+    """
+    def get_read_data(self) -> read_files:
+        buffer = self.read
+        self.read = {}
+        return buffer
 
 
 if __name__ == "__main__":
